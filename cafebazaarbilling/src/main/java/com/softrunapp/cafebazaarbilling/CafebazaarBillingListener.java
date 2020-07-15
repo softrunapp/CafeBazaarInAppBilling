@@ -1,5 +1,6 @@
 package com.softrunapp.cafebazaarbilling;
 
+import com.softrunapp.cafebazaarbilling.util.Inventory;
 import com.softrunapp.cafebazaarbilling.util.Purchase;
 
 public interface CafebazaarBillingListener {
@@ -11,6 +12,8 @@ public interface CafebazaarBillingListener {
     void onIabPurchaseFinished(Purchase purchase);
 
     void onConsumeFinished();
+
+    void onQueryInventoryFinished(Inventory inventory);
 
     void onCancel();
 

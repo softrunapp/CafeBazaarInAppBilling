@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.softrunapp.cafebazaarbilling.util.IabHelper;
+import com.softrunapp.cafebazaarbilling.util.IabResult;
+import com.softrunapp.cafebazaarbilling.util.Inventory;
 import com.softrunapp.cafebazaarbilling.util.Purchase;
 
 
@@ -27,7 +29,8 @@ public class CafebazaarBilling {
 
     public void purchase(String sku) {
         this.sku = sku;
-        connect();
+
+        lunchPayment();
     }
 
     private void lunchPayment() {
@@ -36,7 +39,7 @@ public class CafebazaarBilling {
                 mPurchaseFinishedListener, "bGoa+V9g/yQDXvKRqq+JTFn4uQZbPiQJo4Fp9RzJ");
     }
 
-    private void connect() {
+    public void connectToBazaar() {
         if (Utils.cafebazaarIsInstalled(activity)) {
             billingListener.onStartConnectingToBazaar();
             new Handler().postDelayed(this::paymentConfig, 1000);
@@ -58,8 +61,8 @@ public class CafebazaarBilling {
                 Log.d(TAG, "Problem setting up In-app Billing: " + result);
                 billingListener.onFailed("not Connect");
             } else {
+                queryInventoryAsync();
                 billingListener.onConnectedToBazaar();
-                lunchPayment();
             }
         });
     }
@@ -95,6 +98,28 @@ public class CafebazaarBilling {
                     consumePurchase(purchase);
                 }
             };
+
+    public void queryInventoryAsync() {
+        mHelper.queryInventoryAsync(mGotInventoryListener);
+    }
+
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
+
+            // Is it a failure?
+            if (result.isFailure()) {
+                billingListener.onFailed("Failed to query inventory: " + result);
+                return;
+            }
+
+            Log.d(TAG, "Query inventory was successful.");
+            billingListener.onQueryInventoryFinished(inventory);
+        }
+    };
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);

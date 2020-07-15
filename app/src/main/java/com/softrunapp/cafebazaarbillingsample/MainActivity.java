@@ -2,6 +2,7 @@ package com.softrunapp.cafebazaarbillingsample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.softrunapp.cafebazaarbilling.CafebazaarBilling;
 import com.softrunapp.cafebazaarbilling.CafebazaarBillingListener;
+import com.softrunapp.cafebazaarbilling.util.Inventory;
 import com.softrunapp.cafebazaarbilling.util.Purchase;
 
 public class MainActivity extends AppCompatActivity implements CafebazaarBillingListener {
+    private static final String TAG = "MainActivity";
     private static final String rsaKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwC8SR3KLxmir68Xgkn2G9AxCCXDwmoc78PVB3JeUXsglLE8CV9l9aetr7/hW/MXQl3QGkuK0vRPHUHxb3xxhZjXPIRZYHSvn74dkHXLuUEPi20Fr6FCCDbcNChkDR/Jv1oXEmlteQbqDQY+8ZtIsRFjsaiECB+J81OutOR2+YwmGnBLOt/MryTvpxOqXPFLehRLf2uPmDevMcHtrZKnMf5v0g7HiwkhYOO05Uy3loUCAwEAAQ==";
-    private static final String sku = "test";
+    private static final String sku = "test2";
 
     private CafebazaarBilling cafebazaarBilling;
 
@@ -26,10 +29,12 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
                 .setRsaKey(rsaKey)
                 .setBillingListener(this)
                 .build();
+        cafebazaarBilling.connectToBazaar();
     }
 
     public void payment(View view) {
         cafebazaarBilling.purchase(sku);
+//        cafebazaarBilling.queryInventoryAsync();
     }
 
     @Override
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
     public void onIabPurchaseFinished(Purchase purchase) {
         Toast.makeText(MainActivity.this, "onIabPurchaseFinished", Toast.LENGTH_SHORT)
                 .show();
-        cafebazaarBilling.consumePurchase(purchase);
+//        cafebazaarBilling.consumePurchase(purchase);
     }
 
     @Override
@@ -65,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
     public void onConnectedToBazaar() {
         Toast.makeText(MainActivity.this, "onConnectedToBazaar", Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    @Override
+    public void onQueryInventoryFinished(Inventory inventory) {
+        Purchase premiumPurchase = inventory.getPurchase("test2");
+        Log.d(TAG, premiumPurchase == null ? "null" : premiumPurchase.toString());
     }
 
     @Override
