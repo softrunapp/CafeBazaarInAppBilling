@@ -270,7 +270,7 @@ public class Base64 {
      * @since 1.4
      */
     public static String encode(byte[] source, int off, int len, byte[] alphabet,
-            boolean doPadding) {
+                                boolean doPadding) {
         byte[] outBuff = encode(source, off, len, alphabet, Integer.MAX_VALUE);
         int outLen = outBuff.length;
 
