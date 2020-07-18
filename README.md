@@ -5,7 +5,7 @@
 
 ## پیاده سازی پرداخت درون برنامه ای کافه بازار 
 
-<p dir="rtl"> مرحله 1. اضافه کردن کتابخانه ی CafebazaarInAppBilling به برنامه  </p>
+<p dir="rtl"><b> مرحله 1. اضافه کردن کتابخانه ی CafebazaarInAppBilling به برنامه  </b></p>
 
 <p dir="rtl">1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:</p>
 
@@ -22,7 +22,7 @@
         implementation 'com.github.softrunapp:CafeBazaarInAppBilling:1.0.3'
     }
 
-<p dir="rtl"> <b>3.1- اضافه کردن Java8 به برنامه:</b></p>
+<p dir="rtl"> 3.1- اضافه کردن Java8 به برنامه:</p>
 
     android {
         ...
