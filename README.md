@@ -1,13 +1,16 @@
 # CafeBazaarInAppBilling   پرداخت درون برنامه ای کافه بازار
 
 <img src="screen_shot_1.png" width="260" />
+<p dir="rtl">
 
 ## پیاده سازی پرداخت درون برنامه ای کافه بازار 
 
 ### مرحله 1. اضافه کردن کتابخانه ی CafebazaarInAppBilling به برنامه
 
-<p dir="rtl">1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:</p>
+1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:
 
+
+</p>
 
     allprojects {
         repositories {
@@ -16,16 +19,18 @@
       }
     }
 
-
+<p dir="rtl">
 2.1- اضافه کردن کتابخانه به برنامه:
 
+</p>
     dependencies {
         implementation 'com.github.softrunapp:CafeBazaarInAppBilling:1.0.3'
     }
 
-
+<p dir="rtl">
 3.1- اضافه کردن Java8 به برنامه:
 
+</p>
     android {
         ...
         compileOptions {
@@ -35,7 +40,7 @@
     }
 
 
-
+<p dir="rtl">
 
 ### مرحله 2. دریافت RSA و SKU از کافه بازار
 
@@ -47,6 +52,7 @@
 ###مرحله 3. پیاده سازی پرداخت درون برنامه ای کافه بازار در اپلیکیشن
 
 کد های کلاس اکتیویتی را به شکل زیر تغییر بدید
+</p>
 
 ```java
 public class MainActivity extends AppCompatActivity implements CafebazaarBillingListener {
@@ -119,7 +125,12 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
 }
 ```
 
+<p dir="rtl">
+
 ## متد هایی که صدا زده می شوند:
+
+</p>
+
 ```java
     cafebazaarBilling.purchase(SKU)); // خرید محصول
     cafebazaarBilling.consumePurchase(purchase); // مصرف محصول خریداری شده
