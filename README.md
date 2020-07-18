@@ -125,11 +125,7 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
 }
 ```
 
-<p dir="rtl">
-
-## متد هایی که صدا زده می شوند:
-
-</p>
+##<p dir="rtl"> متد هایی که صدا زده می شوند:</p>
 
 ```java
     cafebazaarBilling.purchase(SKU)); // خرید محصول
