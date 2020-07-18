@@ -12,6 +12,11 @@ import com.softrunapp.cafebazaarbilling.util.Purchase;
 
 
 public class CafebazaarBilling {
+
+    public interface OnConnectListener {
+        void onConnect();
+    }
+
     private static final String TAG = "CafebazaarBilling";
     private static final int RC_REQUEST = 1990;
 
@@ -20,6 +25,7 @@ public class CafebazaarBilling {
     private String rsaKey;
     private CafebazaarBillingListener billingListener;
     private String sku;
+    private OnConnectListener onConnectListener;
 
     private CafebazaarBilling(Activity activity, String rsaKey, CafebazaarBillingListener billingListener) {
         this.activity = activity;
@@ -29,8 +35,8 @@ public class CafebazaarBilling {
 
     public void purchase(String sku) {
         this.sku = sku;
-
-        lunchPayment();
+        onConnectListener = this::lunchPayment;
+        connectToBazaar();
     }
 
     private void lunchPayment() {
@@ -39,7 +45,7 @@ public class CafebazaarBilling {
                 mPurchaseFinishedListener, "bGoa+V9g/yQDXvKRqq+JTFn4uQZbPiQJo4Fp9RzJ");
     }
 
-    public void connectToBazaar() {
+    private void connectToBazaar() {
         if (Utils.cafebazaarIsInstalled(activity)) {
             billingListener.onStartConnectingToBazaar();
             new Handler().postDelayed(this::paymentConfig, 1000);
@@ -61,7 +67,7 @@ public class CafebazaarBilling {
                 Log.d(TAG, "Problem setting up In-app Billing: " + result);
                 billingListener.onFailed("not Connect");
             } else {
-                queryInventoryAsync();
+                onConnectListener.onConnect();
                 billingListener.onConnectedToBazaar();
             }
         });
@@ -100,7 +106,8 @@ public class CafebazaarBilling {
             };
 
     public void queryInventoryAsync() {
-        mHelper.queryInventoryAsync(mGotInventoryListener);
+        onConnectListener = () -> mHelper.queryInventoryAsync(mGotInventoryListener);
+        connectToBazaar();
     }
 
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
