@@ -1,6 +1,4 @@
-# CafeBazaarInAppBilling
-# پرداخت درون برنامه ای کافه بازار
-
+# CafeBazaarInAppBilling   پرداخت درون برنامه ای کافه بازار
 
 ## پیاده سازی پرداخت درون برنامه ای کافه بازار 
 
@@ -9,30 +7,30 @@
 1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:
 
 
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
+    allprojects {
+        repositories {
+          ...
+          maven { url 'https://jitpack.io' }
+      }
     }
-}
 
 
 2.1- اضافه کردن کتابخانه به برنامه:
 
-dependencies {
-    implementation 'com.github.softrunapp:CafeBazaarInAppBilling:1.0.3'
-}
+    dependencies {
+        implementation 'com.github.softrunapp:CafeBazaarInAppBilling:1.0.3'
+    }
 
 
 3.1- اضافه کردن Java8 به برنامه:
 
-android {
-    ...
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    android {
+        ...
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
-}
 
 
 بسیار خب! الان کتابخانه به برنامه اضافه شد
@@ -49,7 +47,7 @@ android {
 
 کد های کلاس اکتیویتی را به شکل زیر تغییر بدید
 
-
+```java
 public class MainActivity extends AppCompatActivity implements CafebazaarBillingListener {
      
      private CafebazaarBilling cafebazaarBilling;
@@ -118,9 +116,11 @@ public class MainActivity extends AppCompatActivity implements CafebazaarBilling
          // اگر خطایی در روند خرید رخ دهد این متد صدا زده می شود
    }
 }
+```
 
 ## متد هایی که صدا زده می شوند:
-
-cafebazaarBilling.purchase(SKU)); // خرید محصول
-cafebazaarBilling.consumePurchase(purchase); // مصرف محصول خریداری شده
-cafebazaarBilling.queryInventoryAsync(); // لیست محصولات خریداری شده
+```java
+    cafebazaarBilling.purchase(SKU)); // خرید محصول
+    cafebazaarBilling.consumePurchase(purchase); // مصرف محصول خریداری شده
+    cafebazaarBilling.queryInventoryAsync(); // لیست محصولات خریداری شده
+```
