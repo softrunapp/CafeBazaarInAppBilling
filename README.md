@@ -6,7 +6,7 @@
 
 ### مرحله 1. اضافه کردن کتابخانه ی CafebazaarInAppBilling به برنامه
 
-1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:
+<p dir="rtl">1.1- اضافه کردن خطوط زیر به build.gradle روت پروژه:</p>
 
 
     allprojects {
