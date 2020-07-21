@@ -1,0 +1,3 @@
+include ':cafebazaarbilling'
+include ':app'
+rootProject.name = "Cafebazaar Billing Sample"
